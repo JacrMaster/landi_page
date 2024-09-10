@@ -1,6 +1,7 @@
 import { BrowserRouter, Router, Route, Routes } from "react-router-dom"
 
 //pages
+import { LayoutAuth } from "./layouts/LayoutAuth";
 import { Login } from "./pages/auth/Login";
 import { LayoutAdmin } from "./layouts/LayoutAdmin";
 import { Home } from "./pages/admin/Home";
@@ -10,7 +11,9 @@ function App() {
   return (
    <BrowserRouter>
     <Routes>
-      <Route path="/login" element = {<Login/>} />
+      <Route path="/auth" element= {<LayoutAuth/>} >
+          <Route index element = {<Login/>}/>
+      </Route>
       <Route path="/" element= {<LayoutAdmin/>} >
           <Route index element = {<Home/>}/>
       </Route>
