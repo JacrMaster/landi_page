@@ -14,7 +14,7 @@ function App() {
       <Route path="/auth" element= {<LayoutAuth/>} >
           <Route index element = {<Login/>}/>
       </Route>
-      <Route path="/" element= {<LayoutAdmin/>} >
+      <Route path="/home" element= {<LayoutAdmin/>} >
           <Route index element = {<Home/>}/>
       </Route>
       <Route path="*" element = {<Error404/>} />
