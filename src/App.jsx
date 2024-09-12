@@ -1,5 +1,6 @@
 import { BrowserRouter, Router, Route, Routes } from "react-router-dom"
 
+import {ProtectedRoute} from "./components/ProtectedRoute";
 //pages
 import { LayoutAuth } from "./layouts/LayoutAuth";
 import { Login } from "./pages/auth/Login";
@@ -11,11 +12,15 @@ function App() {
   return (
    <BrowserRouter>
     <Routes>
-      <Route path="/auth" element= {<LayoutAuth/>} >
+      <Route path="/" element= {<LayoutAuth/>} >
           <Route index element = {<Login/>}/>
       </Route>
       <Route path="/home" element= {<LayoutAdmin/>} >
-          <Route index element = {<Home/>}/>
+          <Route index element = {
+            <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+          }/>
       </Route>
       <Route path="*" element = {<Error404/>} />
     </Routes>
