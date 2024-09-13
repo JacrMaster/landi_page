@@ -26,10 +26,10 @@ export const Login = () => {
         localStorage.setItem('token', data.token); // Guarda el token en el localStorage
         navigate('/home'); // Redirige a la página home
       } else {
-        setError('Login failed. Please check your credentials.');
+        setError('Error de inicio de sesión. Por favor, compruebe sus credenciales..');
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError('Se ha producido un error. Por favor, inténtelo de nuevo.');
     }
   };
 
