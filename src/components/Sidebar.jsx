@@ -5,9 +5,10 @@ import { IoMdClose } from "react-icons/io";
 export const Sidebar = ({ isOpen , closeSidebar}) => {
 
   return (
-    <div className={`fixed lg:static inset-y-0 left-0 w-64 bg-black text-white transform ${
+    <div className={`fixed lg:static   inset-y-0 left-0 w-64 bg-black text-white transform ${
       isOpen ? "translate-x-0" : "-translate-x-full"
-    } lg:translate-x-0 transition-transform duration-300 ease-in-out`}>
+    } lg:translate-x-0  transition-transform duration-300 ease-in-out
+   lg:bg-secondary-100  lg:rounded-xl  lg:h-[500px] `}>
 
       <IoMdClose  onClick={closeSidebar}
       className="text-white absolute left-56 top-3 cursor-pointer lg:hidden hover:text-lg"/>
