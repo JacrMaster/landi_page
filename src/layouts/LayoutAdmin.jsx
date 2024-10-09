@@ -16,7 +16,7 @@ export const LayoutAdmin = () => {
 
     <>
       <Navbar openSidebar={openSidebar} isOpen={isOpen} />
-      <div className='flex gap-6 px-3'>
+      <div className='flex gap-3 px-2'>
         <Sidebar isOpen={isOpen} closeSidebar={closeSidebar} />
         <Outlet />
       </div>
