@@ -35,3 +35,19 @@ export const savePlan = async (planData) => {
   }
 };
 
+export const deletePlan = async (id) => {
+  const token = localStorage.getItem('token'); // Recupera el token de localStorage
+
+  try {
+    const response = await axios.delete(`${API_URL}/delete/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`, // Agrega el token en el encabezado de autorización
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data; // Retorna la respuesta en caso de éxito
+  } catch (error) {
+    throw error;
+  }
+};

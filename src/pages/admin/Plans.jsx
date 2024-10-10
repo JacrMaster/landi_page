@@ -5,7 +5,7 @@ import { FaTrash, FaEdit, FaPlus } from "react-icons/fa"
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 
 const Plans = () => {
-  const { plans, loading, error, expandedRows, toggleExpandRow,  isModalOpen, openModal} = useContext(PlansContext);
+  const { plans, loading, error, expandedRows, toggleExpandRow,  isModalOpen, openModal, removePlan} = useContext(PlansContext);
 
   if (loading) {
     return <p>Cargando planes...</p>;
@@ -14,6 +14,12 @@ const Plans = () => {
   if (error) {
     return <p>Error: {error}</p>;
   }
+
+  const handleDelete = (id) => {
+    if (window.confirm('¿Estás seguro de que deseas eliminar este plan?')) {
+        removePlan(id); // Llamar a la función de eliminar del contexto
+    }
+};
 
   return (
     <div className='w-full p-4 rounded-xl bg-secondary-100'>
@@ -71,7 +77,7 @@ const Plans = () => {
                     </td>
                     <td className='p-2 border-b border-slate-700 hidden md:table-cell '>
                     <div className='flex gap-4 '>
-                        <button onClick={() => openDeleteModal(plan.id)}>
+                        <button onClick={() => handleDelete(plan.id)}>
                           <FaTrash className="text-md  bg-pink-500/10 text-red-600  p-2 box-content rounded-xl cursor-pointer" />
                         </button>
                         <button>
@@ -86,7 +92,7 @@ const Plans = () => {
                         <p className='md:hidden'><strong>Precio instalación:</strong> {plan.installationPrice}</p>
                         <p><strong>Descripción:</strong> {plan.description}</p>
                         <div className='flex gap-4 md:hidden flex-row-reverse'>
-                          <button onClick={() => openDeleteModal(plan.id)} >
+                          <button onClick={() => handleDelete(plan.id)}>
                             <FaTrash className="text-md  bg-pink-500/10 text-red-600  p-2 box-content rounded-xl " />
                           </button>
                           <FaEdit className='text-md  bg-green-500/10 text-green-600  p-2 box-content rounded-xl' />

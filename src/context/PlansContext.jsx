@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getPlans, savePlan } from '../service/PlanService';
+import { getPlans, savePlan, deletePlan } from '../service/PlanService';
 
 
 export const PlansContext = createContext();
@@ -13,6 +13,11 @@ export const PlansProvider = ({ children }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Función para abrir el modal
+  const openModal = () => setIsModalOpen(true);
+
+  // Función para cerrar el modal
+  const closeModal = () => setIsModalOpen(false);
 
   const loadPlans = async () => {
     try {
@@ -25,12 +30,6 @@ export const PlansProvider = ({ children }) => {
     }
   };
 
-   // Función para abrir el modal
-   const openModal = () => setIsModalOpen(true);
-
-   // Función para cerrar el modal
-   const closeModal = () => setIsModalOpen(false);
-
   const addPlan = async (newPlan) => {
     try {
       const savedPlan = await savePlan(newPlan);
@@ -41,7 +40,14 @@ export const PlansProvider = ({ children }) => {
     }
   };
 
-
+  const removePlan = async (id) => {
+    try {
+        await deletePlan(id);
+        setPlans((prevPlans) => prevPlans.filter(plan => plan.id !== id)); // Remover el plan del estado
+    } catch (err) {
+        setError(err.message);
+    }
+};
 
   useEffect(() => {
     loadPlans(); // Obtener los planes al cargar el componente
@@ -55,7 +61,8 @@ export const PlansProvider = ({ children }) => {
     }
   };
   return (
-    <PlansContext.Provider value={{ plans, loading, error, expandedRows, toggleExpandRow, addPlan,  isModalOpen, openModal, closeModal }}>
+    <PlansContext.Provider 
+    value={{ plans, loading, error, expandedRows, toggleExpandRow, addPlan,  isModalOpen, openModal, closeModal, removePlan }}>
       {children}
     </PlansContext.Provider>
   );
