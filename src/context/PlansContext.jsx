@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getPlans } from '../service/PlanService';
+import { getPlans, savePlan } from '../service/PlanService';
 
 
 export const PlansContext = createContext();
@@ -8,7 +8,10 @@ export const PlansProvider = ({ children }) => {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  //para expandir fila en la tabla
   const [expandedRows, setExpandedRows] = useState([]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
   const loadPlans = async () => {
@@ -22,6 +25,24 @@ export const PlansProvider = ({ children }) => {
     }
   };
 
+   // Función para abrir el modal
+   const openModal = () => setIsModalOpen(true);
+
+   // Función para cerrar el modal
+   const closeModal = () => setIsModalOpen(false);
+
+  const addPlan = async (newPlan) => {
+    try {
+      const savedPlan = await savePlan(newPlan);
+      setPlans((prevPlans) => [...prevPlans, savedPlan]); // Añadir el nuevo plan a la lista
+      closeModal();
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+
+
   useEffect(() => {
     loadPlans(); // Obtener los planes al cargar el componente
   }, []);
@@ -34,7 +55,7 @@ export const PlansProvider = ({ children }) => {
     }
   };
   return (
-    <PlansContext.Provider value={{ plans, loading, error, expandedRows, toggleExpandRow  }}>
+    <PlansContext.Provider value={{ plans, loading, error, expandedRows, toggleExpandRow, addPlan,  isModalOpen, openModal, closeModal }}>
       {children}
     </PlansContext.Provider>
   );

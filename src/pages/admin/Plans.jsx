@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { PlansContext } from '../../context/PlansContext';
+import { PlanForm } from '../../components/plan/PlanForm';
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa"
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 
 const Plans = () => {
-  const { plans, loading, error, expandedRows, toggleExpandRow} = useContext(PlansContext);
+  const { plans, loading, error, expandedRows, toggleExpandRow,  isModalOpen, openModal} = useContext(PlansContext);
 
   if (loading) {
     return <p>Cargando planes...</p>;
@@ -19,6 +20,7 @@ const Plans = () => {
       <h1>Lista de Planes</h1>
       <div className="w-full flex justify-between items-center mb-3 mt-1">
         <button
+          onClick={openModal}
           className="p-1 bg-white text-black hover:bg-primary hover:text-white  transition-colors   w-32 rounded-sm mt-6">
           AGREGAR PLAN
         </button>
@@ -101,6 +103,7 @@ const Plans = () => {
       ) : (
         <p>No hay planes disponibles.</p>
       )}
+      {isModalOpen && <PlanForm />}
     </div>
   )
 }

@@ -7,14 +7,31 @@ export const getPlans = async () => {
 		const token = localStorage.getItem('token');
 
 		const response = await axios.get(`${API_URL}/all`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const savePlan = async (planData) => {
+  const token = localStorage.getItem('token');
+
+  try {
+    const response = await axios.post(`${API_URL}/add`, planData, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
     });
 
     return response.data;
-	} catch (error) {
-		throw error; 
-	}
-	
+  } catch (error) {
+    throw new Error('Error al guardar el plan');
+  }
 };
+
